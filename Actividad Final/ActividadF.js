@@ -58,6 +58,11 @@ db.Clientes.find(
   { "compras.monto": { $gt: 300 } },
   { nombre: 1, compras: { $elemMatch: { monto: { $gt: 300 } } }, _id: 0 }
 )
+//verificamos clientes con mas de 10 compras
+db.Clientes.countDocuments(
+  { $expr: { $gt: [ { $size: "$compras" }, 10 ] } }
+)
+
 //buscamos el cliente de id 0
 db.Clientes.find(
   { _id: 0 },
